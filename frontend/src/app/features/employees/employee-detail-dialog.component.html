@@ -1,0 +1,83 @@
+<div class="detail">
+  <header class="detail-header">
+    <div class="identity">
+      <div class="avatar">{{ employee.firstName.charAt(0) }}{{ employee.lastName.charAt(0) }}</div>
+      <div>
+        <p class="eyebrow">Employee details</p>
+        <h2 mat-dialog-title>{{ employee.firstName }} {{ employee.lastName }}</h2>
+        <p class="code">{{ employee.employeeCode }} · {{ employee.department }}</p>
+      </div>
+    </div>
+    <button mat-icon-button type="button" aria-label="Close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <mat-dialog-content>
+    <section class="status-banner" [attr.data-status]="employee.status">
+      <div>
+        <strong>{{ formatLabel(employee.status) }}</strong>
+        <p>{{ statusHint(employee.status) }}</p>
+      </div>
+      <span class="status" [attr.data-status]="employee.status">{{ formatLabel(employee.status) }}</span>
+    </section>
+
+    <section class="grid">
+      <article>
+        <h3>Contact</h3>
+        <div class="field">
+          <span>Email</span>
+          <strong>{{ employee.email }}</strong>
+        </div>
+        <div class="field">
+          <span>Phone</span>
+          <strong>{{ employee.phone || '—' }}</strong>
+        </div>
+      </article>
+
+      <article>
+        <h3>Employment</h3>
+        <div class="field">
+          <span>Type</span>
+          <strong>{{ formatLabel(employee.employmentType || 'FULL_TIME') }}</strong>
+        </div>
+        <div class="field">
+          <span>Hire date</span>
+          <strong>{{ employee.hireDate }}</strong>
+        </div>
+        @if (isTermBased) {
+          <div class="field">
+            <span>{{ termEndLabel }}</span>
+            <strong>{{ employee.contractEndDate || employee.employmentEndDate || '—' }}</strong>
+          </div>
+        } @else if (employee.status === 'INACTIVE' || employee.employmentEndDate) {
+          <div class="field">
+            <span>Employment end date</span>
+            <strong>{{ employee.employmentEndDate || '—' }}</strong>
+          </div>
+        }
+      </article>
+    </section>
+
+    <section class="notes">
+      <h3>{{ employee.status === 'INACTIVE' ? 'Reason' : 'Notes' }}</h3>
+      @if (employee.notes) {
+        <p>{{ employee.notes }}</p>
+      } @else {
+        <p class="empty">
+          {{ employee.status === 'INACTIVE' ? 'No reason recorded.' : 'No notes added for this employee.' }}
+        </p>
+      }
+    </section>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button type="button" (click)="close()">Close</button>
+    @if (canEdit) {
+      <button mat-flat-button color="primary" type="button" (click)="edit()">
+        <mat-icon>edit</mat-icon>
+        Edit employee
+      </button>
+    }
+  </mat-dialog-actions>
+</div>

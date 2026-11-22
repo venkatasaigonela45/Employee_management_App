@@ -1,0 +1,180 @@
+<div class="dialog">
+  <header class="dialog-header">
+    <div>
+      <p class="eyebrow">{{ isEdit ? 'Update record' : 'New record' }}</p>
+      <h2 mat-dialog-title>{{ isEdit ? 'Edit Employee' : 'Add Employee' }}</h2>
+      <p class="subtitle">Fill in the employee details below. Required fields are marked.</p>
+    </div>
+    <button mat-icon-button type="button" aria-label="Close" (click)="cancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <mat-dialog-content>
+    <form [formGroup]="form" class="form-body">
+      <section>
+        <h3>Personal details</h3>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Employee Code</mat-label>
+            <input matInput formControlName="employeeCode" placeholder="EMP013" />
+            <mat-icon matPrefix>badge</mat-icon>
+            @if (form.controls.employeeCode.hasError('required')) {
+              <mat-error>Code is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="name@company.com" />
+            <mat-icon matPrefix>mail</mat-icon>
+            @if (form.controls.email.hasError('required')) {
+              <mat-error>Email is required</mat-error>
+            } @else if (form.controls.email.hasError('email')) {
+              <mat-error>Enter a valid email</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" />
+            <mat-icon matPrefix>person</mat-icon>
+            @if (form.controls.firstName.hasError('required')) {
+              <mat-error>First name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" />
+            <mat-icon matPrefix>person_outline</mat-icon>
+            @if (form.controls.lastName.hasError('required')) {
+              <mat-error>Last name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="span-2">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" placeholder="+1-555-0100" />
+            <mat-icon matPrefix>call</mat-icon>
+            @if (form.controls.phone.hasError('pattern')) {
+              <mat-error>Use 7–20 digits with optional +, spaces, dashes, or parentheses</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section>
+        <h3>Role & employment</h3>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Department</mat-label>
+            <mat-select formControlName="department">
+              @for (dept of departments; track dept) {
+                <mat-option [value]="dept">{{ dept }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix>apartment</mat-icon>
+            @if (form.controls.department.hasError('required')) {
+              <mat-error>Department is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              @for (status of statuses; track status) {
+                <mat-option [value]="status">{{ formatLabel(status) }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix>flag</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Employment Type</mat-label>
+            <mat-select formControlName="employmentType">
+              @for (type of employmentTypes; track type) {
+                <mat-option [value]="type">{{ formatLabel(type) }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix>work</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Hire Date</mat-label>
+            <input matInput [matDatepicker]="hirePicker" formControlName="hireDate" />
+            <mat-datepicker-toggle matIconSuffix [for]="hirePicker"></mat-datepicker-toggle>
+            <mat-datepicker #hirePicker></mat-datepicker>
+            <mat-icon matPrefix>event</mat-icon>
+            @if (form.controls.hireDate.hasError('required')) {
+              <mat-error>Hire date is required</mat-error>
+            }
+          </mat-form-field>
+
+          @if (showContractEndDate) {
+            <mat-form-field appearance="outline" class="span-2">
+              <mat-label>
+                {{ contractEndLabel }}{{ contractEndRequired ? '' : ' (optional)' }}
+              </mat-label>
+              <input matInput [matDatepicker]="contractPicker" formControlName="contractEndDate" />
+              <mat-datepicker-toggle matIconSuffix [for]="contractPicker"></mat-datepicker-toggle>
+              <mat-datepicker #contractPicker></mat-datepicker>
+              <mat-icon matPrefix>event_available</mat-icon>
+              @if (showInactiveReason) {
+                <mat-hint>Used as the employment end date when inactive</mat-hint>
+              }
+              @if (form.controls.contractEndDate.hasError('required')) {
+                <mat-error>{{ contractEndLabel }} is required</mat-error>
+              }
+            </mat-form-field>
+          }
+
+          @if (showEmploymentEndDate) {
+            <mat-form-field appearance="outline" class="span-2">
+              <mat-label>Employment End Date</mat-label>
+              <input matInput [matDatepicker]="endPicker" formControlName="employmentEndDate" />
+              <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+              <mat-icon matPrefix>event_busy</mat-icon>
+              <mat-hint>Last working day for this full-time employee</mat-hint>
+              @if (form.controls.employmentEndDate.hasError('required')) {
+                <mat-error>Employment end date is required</mat-error>
+              }
+            </mat-form-field>
+          }
+
+          <mat-form-field appearance="outline" class="span-2">
+            <mat-label>{{ showInactiveReason ? 'Reason / Notes' : 'Notes' }}</mat-label>
+            <textarea
+              matInput
+              rows="3"
+              formControlName="notes"
+              [placeholder]="showInactiveReason ? 'Why is this employee inactive?' : 'Optional notes about this employee'"
+            ></textarea>
+            <mat-icon matPrefix>notes</mat-icon>
+            @if (form.controls.notes.hasError('required')) {
+              <mat-error>Reason is required for inactive employees</mat-error>
+            } @else if (form.controls.notes.hasError('maxlength')) {
+              <mat-error>Notes must be 500 characters or less</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </section>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="dialog-actions" align="end">
+    <button mat-stroked-button type="button" (click)="cancel()">Cancel</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      class="save-btn"
+      [disabled]="form.invalid"
+      (click)="save()"
+    >
+      <mat-icon>{{ isEdit ? 'save' : 'person_add' }}</mat-icon>
+      {{ isEdit ? 'Save changes' : 'Create employee' }}
+    </button>
+  </mat-dialog-actions>
+</div>

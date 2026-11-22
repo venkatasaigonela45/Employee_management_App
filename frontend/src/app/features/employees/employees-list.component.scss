@@ -1,0 +1,234 @@
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2rem;
+  font-family: var(--brand-font-ui);
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--brand-primary-deep);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  color: var(--brand-ink);
+  font-size: clamp(1.7rem, 2.4vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0.4rem 0 0;
+  color: var(--brand-ink-soft);
+}
+
+.add-btn mat-icon {
+  margin-right: 0.2rem;
+}
+
+.panel {
+  background: var(--brand-surface-card);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-md);
+  overflow: hidden;
+}
+
+.panel-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1rem 0.35rem;
+}
+
+.search {
+  width: min(420px, 100%);
+}
+
+.count {
+  color: var(--brand-ink-soft);
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.table-wrap {
+  position: relative;
+  overflow: auto;
+}
+
+.loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.55);
+  z-index: 2;
+}
+
+table {
+  width: 100%;
+}
+
+::ng-deep .page .mat-mdc-header-row {
+  background: #eef3f6;
+}
+
+::ng-deep .page .mat-mdc-header-cell {
+  color: var(--brand-ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+::ng-deep .page .mat-mdc-row:hover {
+  background: rgba(42, 122, 140, 0.04);
+}
+
+::ng-deep .page .clickable-row {
+  cursor: pointer;
+}
+
+::ng-deep .page .actions-col {
+  width: 150px;
+}
+
+::ng-deep .page .mat-mdc-cell,
+::ng-deep .page .mat-mdc-header-cell {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.employee-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 220px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--brand-primary-soft);
+  color: var(--brand-primary-deep);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.employee-meta {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.employee-meta strong {
+  color: var(--brand-ink);
+  font-size: 0.92rem;
+}
+
+.employee-meta span {
+  color: var(--brand-ink-soft);
+  font-size: 0.78rem;
+}
+
+.code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+  color: var(--brand-ink);
+}
+
+.type-pill {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--brand-ink);
+}
+
+.type-pill[data-type='CONTRACT'],
+.type-pill[data-type='INTERN'] {
+  color: var(--brand-primary, #0f766e);
+}
+
+.status {
+  display: inline-block;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.status[data-status='ACTIVE'] {
+  background: var(--brand-success-soft);
+  color: var(--brand-success);
+}
+
+.status[data-status='INACTIVE'] {
+  background: var(--brand-neutral-soft);
+  color: var(--brand-neutral);
+}
+
+.status[data-status='ON_LEAVE'] {
+  background: var(--brand-warning-soft);
+  color: var(--brand-warning);
+}
+
+.end-date {
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-ink);
+}
+
+.end-date[data-inactive='true'] {
+  color: var(--brand-neutral);
+}
+
+.muted {
+  color: var(--brand-ink-soft);
+}
+
+.actions-col {
+  width: 112px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.delete-btn {
+  color: var(--brand-danger) !important;
+}
+
+.empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--brand-ink-soft);
+}
+
+::ng-deep .page .mat-mdc-paginator {
+  border-top: 1px solid var(--brand-border);
+  background: transparent;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .panel-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

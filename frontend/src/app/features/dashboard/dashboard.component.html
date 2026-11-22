@@ -1,0 +1,125 @@
+<section class="dashboard">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Overview</p>
+      <h1>Welcome back, {{ auth.username() }}</h1>
+      <p class="subtitle">
+        @if (auth.isAdmin()) {
+          Track workforce records, review status at a glance, and jump into daily tasks.
+        } @else if (auth.isViewer()) {
+          Browse workforce records and reports in read-only mode.
+        } @else {
+          Welcome. You can view your own employee profile in read-only mode.
+        }
+      </p>
+    </div>
+    <div class="hero-actions">
+      <a mat-flat-button color="primary" routerLink="/employees">
+        <mat-icon>{{ auth.isSelfService() ? 'badge' : 'group' }}</mat-icon>
+        {{ auth.isSelfService() ? 'My profile' : auth.isAdmin() ? 'Manage employees' : 'View employees' }}
+      </a>
+      @if (auth.canViewReports()) {
+        <a mat-stroked-button routerLink="/reports">
+          <mat-icon>assessment</mat-icon>
+          Open reports
+        </a>
+      }
+    </div>
+  </header>
+
+  @if (loading) {
+    <div class="loading">
+      <mat-spinner diameter="36"></mat-spinner>
+    </div>
+  } @else {
+    <div class="kpi-grid">
+      <article class="kpi-card">
+        <div class="kpi-icon total">
+          <mat-icon>badge</mat-icon>
+        </div>
+        <div>
+          <p class="kpi-label">Total employees</p>
+          <p class="kpi-value">{{ summary?.totalRecords ?? 0 }}</p>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-icon active">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div>
+          <p class="kpi-label">Active</p>
+          <p class="kpi-value">{{ statusCount('ACTIVE') }}</p>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-icon leave">
+          <mat-icon>event_busy</mat-icon>
+        </div>
+        <div>
+          <p class="kpi-label">On leave</p>
+          <p class="kpi-value">{{ statusCount('ON_LEAVE') }}</p>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-icon inactive">
+          <mat-icon>pause_circle</mat-icon>
+        </div>
+        <div>
+          <p class="kpi-label">Inactive</p>
+          <p class="kpi-value">{{ statusCount('INACTIVE') }}</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="content-grid">
+      <mat-card class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Recent employees</h2>
+            <p>Latest updates from the employee directory</p>
+          </div>
+          <a mat-button color="primary" routerLink="/employees">View all</a>
+        </div>
+
+        <div class="recent-list">
+          @for (emp of recentEmployees; track emp.id) {
+            <div class="recent-row">
+              <div class="avatar">{{ emp.firstName.charAt(0) }}{{ emp.lastName.charAt(0) }}</div>
+              <div class="recent-meta">
+                <strong>{{ emp.firstName }} {{ emp.lastName }}</strong>
+                <span>{{ emp.department }} · {{ emp.employeeCode }}</span>
+              </div>
+              <span class="status" [attr.data-status]="emp.status">{{ emp.status }}</span>
+            </div>
+          } @empty {
+            <p class="empty">No employees found yet.</p>
+          }
+        </div>
+      </mat-card>
+
+      <div class="side-stack">
+        <mat-card class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Departments</h2>
+              <p>Headcount by department</p>
+            </div>
+          </div>
+          <div class="dept-list">
+            @for (dept of departmentEntries(); track dept.name) {
+              <div class="dept-row">
+                <span>{{ dept.name }}</span>
+                <strong>{{ dept.count }}</strong>
+              </div>
+            } @empty {
+              <p class="empty">No department data available.</p>
+            }
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  }
+</section>

@@ -1,0 +1,93 @@
+<div class="login-page">
+  <section class="login-shell" aria-label="Sign in">
+    <aside class="brand-panel">
+      <div class="brand-content">
+        <p class="brand-mark">Workforce Suite</p>
+        <h1>Employee Management</h1>
+        <p class="brand-copy">
+          Secure access to employee records, reports, and day-to-day workforce operations.
+        </p>
+        <ul class="brand-points">
+          <li>Protected JWT authentication</li>
+          <li>Employee records and reporting</li>
+          <li>Role-ready admin workspace</li>
+        </ul>
+      </div>
+      <p class="brand-footer">Internal assessment application</p>
+    </aside>
+
+    <div class="form-panel">
+      <div class="form-wrap">
+        <header class="form-header">
+          <h2>Sign in</h2>
+          <p>Enter your credentials to continue</p>
+        </header>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Username</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput formControlName="username" autocomplete="username" autofocus />
+            @if (form.controls.username.hasError('required')) {
+              <mat-error>Username is required</mat-error>
+            } @else if (form.controls.username.hasError('minlength')) {
+              <mat-error>Minimum 3 characters</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <mat-icon matPrefix>lock</mat-icon>
+            <input
+              matInput
+              [type]="hidePassword ? 'password' : 'text'"
+              formControlName="password"
+              autocomplete="current-password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
+              [attr.aria-pressed]="!hidePassword"
+            >
+              <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
+            @if (form.controls.password.hasError('required')) {
+              <mat-error>Password is required</mat-error>
+            } @else if (form.controls.password.hasError('minlength')) {
+              <mat-error>Minimum 6 characters</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-checkbox formControlName="rememberMe">Remember username</mat-checkbox>
+          </div>
+          <p class="hint">Session uses JWT access + refresh tokens. Idle logout after 30 minutes.</p>
+
+          @if (errorMessage) {
+            <div class="error" role="alert">
+              <mat-icon>error_outline</mat-icon>
+              <span>{{ errorMessage }}</span>
+            </div>
+          }
+
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            class="full-width login-btn"
+            [disabled]="form.invalid || loading"
+          >
+            @if (loading) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              Sign in
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>

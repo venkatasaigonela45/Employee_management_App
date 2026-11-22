@@ -1,0 +1,33 @@
+<mat-toolbar color="primary" class="topbar">
+  <span class="brand">Employee Management</span>
+  <nav class="nav">
+    <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a mat-button routerLink="/employees" routerLinkActive="active">
+      {{ auth.isSelfService() ? 'My Profile' : 'Employees' }}
+    </a>
+    @if (auth.canViewReports()) {
+      <a mat-button routerLink="/reports" routerLinkActive="active">Reports</a>
+    }
+  </nav>
+  <span class="spacer"></span>
+  <span class="user">
+    {{ auth.username() }}
+    <small>
+      @if (auth.isAdmin()) {
+        Admin
+      } @else if (auth.isViewer()) {
+        Viewer
+      } @else {
+        Employee
+      }
+    </small>
+  </span>
+  <button mat-button type="button" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
+</mat-toolbar>
+
+<main class="content">
+  <router-outlet />
+</main>

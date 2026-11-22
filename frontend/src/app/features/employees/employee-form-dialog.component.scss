@@ -1,0 +1,102 @@
+.dialog {
+  font-family: var(--brand-font-ui);
+  color: var(--brand-ink);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem 0.35rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.3rem;
+  color: var(--brand-primary-deep);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h2[mat-dialog-title] {
+  margin: 0;
+  padding: 0;
+  color: var(--brand-ink);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--brand-ink-soft);
+  font-size: 0.9rem;
+}
+
+.form-body {
+  display: grid;
+  gap: 1rem;
+  min-width: min(680px, 82vw);
+  padding: 0.35rem 0.25rem 0.5rem;
+}
+
+.form-body h3 {
+  margin: 0 0 0.55rem;
+  color: var(--brand-ink);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem 0.9rem;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.dialog-actions {
+  padding: 0.85rem 1.25rem 1.15rem !important;
+  border-top: 1px solid var(--brand-border);
+  margin: 0 !important;
+  gap: 0.55rem;
+}
+
+.save-btn mat-icon {
+  margin-right: 0.2rem;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+::ng-deep .employee-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+::ng-deep .employee-dialog-panel .mat-mdc-dialog-content {
+  max-height: 70vh;
+  padding: 0 1.25rem !important;
+}
+
+::ng-deep .form-body .mat-mdc-form-field-icon-prefix {
+  padding-right: 0.2rem;
+}
+
+@media (max-width: 700px) {
+  .form-body {
+    min-width: auto;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .span-2 {
+    grid-column: span 1;
+  }
+}
