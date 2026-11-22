@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light;
+
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$cyan-palette,
+      tertiary: mat.$azure-palette,
+    ),
+    typography: (
+      plain-family: 'DM Sans, sans-serif',
+      brand-family: 'DM Sans, sans-serif',
+    ),
+    density: 0,
+  ));
+
+  // Map Material system colors to our brand palette
+  @include mat.theme-overrides((
+    primary: #2a7a8c,
+    on-primary: #ffffff,
+    primary-container: #d7eef2,
+    on-primary-container: #10233f,
+    secondary: #163356,
+    on-secondary: #ffffff,
+    secondary-container: #d9e2ef,
+    on-secondary-container: #10233f,
+    tertiary: #1f5f6d,
+    on-tertiary: #ffffff,
+    surface: #f5f7fa,
+    on-surface: #10233f,
+    on-surface-variant: #3d4f66,
+    surface-container: #ffffff,
+    surface-container-low: #f5f7fa,
+    surface-container-high: #eef2f6,
+    outline: #d7dee8,
+    outline-variant: #c5ced9,
+    error: #9f1d1d,
+    on-error: #ffffff,
+    error-container: #f8e8e8,
+    on-error-container: #9f1d1d,
+  ));
+}

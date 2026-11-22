@@ -1,0 +1,38 @@
+// Workforce brand tokens — single source of truth for colors/type across the app.
+:root {
+  /* Brand */
+  --brand-name: "Employee Management";
+  --brand-primary: #2a7a8c;
+  --brand-primary-deep: #1f5f6d;
+  --brand-primary-soft: #d7eef2;
+  --brand-primary-muted: #7eb8c4;
+
+  /* Neutrals */
+  --brand-ink: #10233f;
+  --brand-ink-soft: #3d4f66;
+  --brand-panel: #0f243d;
+  --brand-panel-2: #163356;
+  --brand-surface: #f5f7fa;
+  --brand-surface-card: #ffffff;
+  --brand-border: #d7dee8;
+  --brand-overlay: rgba(16, 35, 63, 0.12);
+
+  /* Status */
+  --brand-success: #1f7a4d;
+  --brand-success-soft: #e7f6ec;
+  --brand-warning: #a15c00;
+  --brand-warning-soft: #fff4e5;
+  --brand-danger: #9f1d1d;
+  --brand-danger-soft: #f8e8e8;
+  --brand-neutral: #5f6368;
+  --brand-neutral-soft: #f1f3f4;
+
+  /* Typography */
+  --brand-font-display: "DM Sans", "Segoe UI", sans-serif;
+  --brand-font-ui: "DM Sans", "Segoe UI", sans-serif;
+
+  /* Shape / elevation */
+  --brand-radius-sm: 8px;
+  --brand-radius-md: 12px;
+  --brand-shadow: 0 12px 32px rgba(16, 35, 63, 0.1);
+}
